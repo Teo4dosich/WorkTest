@@ -510,8 +510,8 @@ public class Main {
                     });
                     fileChooser.showOpenDialog(null);
                     File file = fileChooser.getSelectedFile();
-
-                    List<String[]>  read = readFromCsvFile(";", file.getPath());
+                    if (file != null) {
+                        List<String[]>  read = readFromCsvFile(";", file.getPath());
                     for (String[] row: read) {
                         for (int i = 0; i < ustavki.length; i++){
                             String tmp = row[0].substring(1, row[0].length()-1);
@@ -555,7 +555,7 @@ public class Main {
                         CustomTable.refresh();
                         CustomTable.setVisible(true);
                     }
-                }
+                }}
             });
 
 			panel.add(ReadFromFile);
@@ -583,6 +583,7 @@ public class Main {
                     });
                     fileChooser.showSaveDialog(null);
                     File file = fileChooser.getSelectedFile();
+                    if (file != null){
 					try {
 						CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(file.getPath()), "Cp1251"), ';','"', '@', "\n");
 						for (TreeItem<SetpointValues> wr: idata) {
@@ -594,6 +595,7 @@ public class Main {
 					} catch (IOException ioException) {
 						ioException.printStackTrace();
 					}
+                    }
 				}
             });
 			panel.add(WriteToFile);
@@ -704,12 +706,14 @@ public class Main {
                     });
                     fileChooser.showSaveDialog(null);
                     File savefile = fileChooser.getSelectedFile();
+                    if (savefile != null){
                     try {
                         FileWriter fw = new FileWriter(savefile.getPath());
                         OutputInformation.write(fw);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
+                }
                 }
             });
 			tabc.addTab(name, panel);
